@@ -1,5 +1,9 @@
 # Android权限申请开发文档
 
+[GitHub主页](https://github.com/goweii/AnyPermission)
+
+[Demo下载](https://github.com/goweii/AnyPermission/raw/master/app/release/app-release.apk)
+
 
 
 # 概述
@@ -15,23 +19,6 @@
 在申请多个权限时，本框架采用排队方式申请，即先申请第一个权限，第一个申请成功后再进行下一个的申请流程，第一个失败则为本次申请失败。流程图如下。
 
 ![流程图](https://raw.githubusercontent.com/goweii/AnyPermission/master/picture/flowchart.png)
-
-
-
-# 适用范围
-
-- 适用平台：Android SDK14+
-- 适用版本：1.0.0及以上
-
-
-
-# 重要更新
-
-## 2019-03-18
-
-- 版本号：1.0.0
-- 撰写人：崔振
-- 更新内容：首个版本
 
 
 
