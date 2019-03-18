@@ -4,7 +4,7 @@
 
 # 概述
 
-用于快速申请Android权限，链式调用，适配绝大多数国产系统。
+是对[AndPermission](https://github.com/yanzhenjie/AndPermission)的封装，用于快速申请Android权限，链式调用，适配绝大多数国产系统。
 
 - 运行时权限
 - 未知应用安装权限
