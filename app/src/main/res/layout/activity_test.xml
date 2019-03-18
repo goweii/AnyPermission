@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".TestActivity">
+
+    <Button
+        android:id="@+id/btn_runtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="运行时权限" />
+
+    <Button
+        android:id="@+id/btn_install"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="安装应用权限" />
+
+    <Button
+        android:id="@+id/btn_overlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="悬浮窗权限" />
+
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="修改设置权限" />
+
+    <Button
+        android:id="@+id/btn_notification_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示通知权限" />
+
+    <Button
+        android:id="@+id/btn_notification_access"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="访问通知权限" />
+
+</LinearLayout>
