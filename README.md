@@ -1,8 +1,10 @@
-# Android权限申请开发文档
+# AnyPermission
 
 [GitHub主页](https://github.com/goweii/AnyPermission)
 
 [Demo下载](https://github.com/goweii/AnyPermission/raw/master/app/release/app-release.apk)
+
+
 
 
 
