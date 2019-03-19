@@ -3,12 +3,10 @@ package per.goweii.anypermission;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.option.Option;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.io.File;
@@ -21,8 +19,7 @@ import java.io.File;
  */
 public class AnyPermission {
 
-    private final Context mContext;
-    private final Option mOption;
+    private final ContextHolder mContextHolder;
 
     public static AnyPermission with(@NonNull final Context context) {
         return new AnyPermission(context);
@@ -41,60 +38,52 @@ public class AnyPermission {
     }
 
     private AnyPermission(final Context context){
-        mContext = context;
-        mOption = AndPermission.with(context);
+        mContextHolder = new ContextHolder(context);
     }
 
     private AnyPermission(final Activity activity){
-        mContext = activity;
-        mOption = AndPermission.with(activity);
+        mContextHolder = new ContextHolder(activity);
     }
 
     private AnyPermission(final Fragment fragment){
-        mContext = fragment.getContext();
-        mOption = AndPermission.with(fragment);
+        mContextHolder = new ContextHolder(fragment);
     }
 
     private AnyPermission(final android.app.Fragment fragment){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mContext = fragment.getContext();
-        } else {
-            mContext = fragment.getActivity();
-        }
-        mOption = AndPermission.with(fragment);
+        mContextHolder = new ContextHolder(fragment);
     }
 
     public String name(String permission) {
-        return Permission.transformText(mContext, permission).get(0);
+        return Permission.transformText(mContextHolder.getContext(), permission).get(0);
     }
 
     public Uri fileUri(File file) {
-        return AndPermission.getFileUri(mContext, file);
+        return AndPermission.getFileUri(mContextHolder.getContext(), file);
     }
 
     public RuntimeRequester runtime(int requestCodeWhenGoSetting) {
-        return new RuntimeRequester(mOption, mContext, requestCodeWhenGoSetting);
+        return new RuntimeRequester(mContextHolder.getOption(), mContextHolder.getContext(), requestCodeWhenGoSetting);
     }
 
     public InstallRequester install(File apkFile) {
-        return new InstallRequester(mOption, apkFile);
+        return new InstallRequester(mContextHolder.getOption(), apkFile);
     }
 
     public OverlayRequester overlay() {
-        return new OverlayRequester(mOption);
+        return new OverlayRequester(mContextHolder.getOption());
     }
 
     @Deprecated
     public SettingRequester setting() {
-        return new SettingRequester(mOption);
+        return new SettingRequester(mContextHolder.getOption());
     }
 
     public NotificationShowRequester notificationShow() {
-        return new NotificationShowRequester(mOption);
+        return new NotificationShowRequester(mContextHolder.getOption());
     }
 
     public NotificationAccessRequester notificationAccess() {
-        return new NotificationAccessRequester(mOption);
+        return new NotificationAccessRequester(mContextHolder.getOption());
     }
 
 }
