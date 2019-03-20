@@ -83,7 +83,7 @@ private void requestRuntime() {
                     // processor有两个方法，必须调用其一，否则申请流程将终止。
                 }
             })
-            .start(new RequestListener() {
+            .request(new RequestListener() {
                 @Override
                 public void onSuccess() {
                     // TODO 授权成功
@@ -116,7 +116,7 @@ AnyPermission.with(this).install(apkFile)
                 // processor有两个方法，必须调用其一，否则申请流程将终止。
             }
         })
-        .start(new RequestListener() {
+        .request(new RequestListener() {
             @Override
             public void onSuccess() {
                 // TODO 授权成功
@@ -140,7 +140,7 @@ AnyPermission.with(this).overlay()
                 // processor有两个方法，必须调用其一，否则申请流程将终止。
             }
         })
-        .start(new RequestListener() {
+        .request(new RequestListener() {
             @Override
             public void onSuccess() {
                 // TODO 授权成功
@@ -164,7 +164,7 @@ AnyPermission.with(this).notificationShow()
                 // processor有两个方法，必须调用其一，否则申请流程将终止。
             }
         })
-        .start(new RequestListener() {
+        .request(new RequestListener() {
             @Override
             public void onSuccess() {
                 // TODO 授权成功
@@ -188,7 +188,7 @@ AnyPermission.with(this).notificationAccess()
                 // processor有两个方法，必须调用其一，否则申请流程将终止。
             }
         })
-        .start(new RequestListener() {
+        .request(new RequestListener() {
             @Override
             public void onSuccess() {
                 // TODO 授权成功
@@ -306,7 +306,7 @@ public RuntimeRequester onGoSetting(RequestInterceptor<String> onGoSetting)
 /**
  * 开始申请
  **/
-public RuntimeRequester start(@NonNull RequestListener listener)
+public RuntimeRequester request(@NonNull RequestListener listener)
 
 /**
  * 从设置页返回的时候，需要在再Activity的onActivityResult()中调用
@@ -327,7 +327,7 @@ public InstallRequester onWithoutPermission(RequestInterceptor<File> onWithoutPe
 /**
  * 开始申请
  **/
-public Void start(final RequestListener listener)
+public void request(final RequestListener listener)
 ```
 
 ## OverlayRequester
@@ -343,7 +343,7 @@ public OverlayRequester onWithoutPermission(RequestInterceptor<Void> onWithoutPe
 /**
  * 开始申请
  **/
-public Void start(final RequestListener listener)
+public void request(final RequestListener listener)
 ```
 
 ## NotificationShowRequester
@@ -359,7 +359,7 @@ public NotificationShowRequester onWithoutPermission(RequestInterceptor<Void> on
 /**
  * 开始申请
  **/
-public Void start(final RequestListener listener)
+public void request(final RequestListener listener)
 ```
 
 ## NotificationAccessRequester
@@ -375,7 +375,7 @@ public NotificationAccessRequester onWithoutPermission(RequestInterceptor<Void> 
 /**
  * 开始申请
  **/
-public Void start(final RequestListener listener)
+public void request(final RequestListener listener)
 ```
 
 

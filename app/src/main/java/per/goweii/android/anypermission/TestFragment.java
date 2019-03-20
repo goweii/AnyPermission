@@ -191,7 +191,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestFragment.this.getContext(), "成功", Toast.LENGTH_SHORT).show();
@@ -241,7 +241,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestFragment.this.getContext(), "成功", Toast.LENGTH_SHORT).show();
@@ -291,7 +291,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestFragment.this.getContext(), "成功", Toast.LENGTH_SHORT).show();
@@ -341,7 +341,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestFragment.this.getContext(), "成功", Toast.LENGTH_SHORT).show();
@@ -391,7 +391,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestFragment.this.getContext(), "成功", Toast.LENGTH_SHORT).show();
@@ -441,7 +441,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestFragment.this.getContext(), "成功", Toast.LENGTH_SHORT).show();

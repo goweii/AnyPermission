@@ -33,7 +33,7 @@ public class InstallRequester implements Requester<Void> {
     }
 
     @Override
-    public Void start(final RequestListener listener) {
+    public Void request(final RequestListener listener) {
         mOption.install()
                 .file(mApkFile)
                 .rationale(new Rationale<File>() {

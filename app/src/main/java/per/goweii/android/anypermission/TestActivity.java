@@ -184,7 +184,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestActivity.this, "成功", Toast.LENGTH_SHORT).show();
@@ -234,7 +234,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestActivity.this, "成功", Toast.LENGTH_SHORT).show();
@@ -284,7 +284,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestActivity.this, "成功", Toast.LENGTH_SHORT).show();
@@ -334,7 +334,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestActivity.this, "成功", Toast.LENGTH_SHORT).show();
@@ -384,7 +384,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestActivity.this, "成功", Toast.LENGTH_SHORT).show();
@@ -434,7 +434,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                                 .show();
                     }
                 })
-                .start(new RequestListener() {
+                .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TestActivity.this, "成功", Toast.LENGTH_SHORT).show();

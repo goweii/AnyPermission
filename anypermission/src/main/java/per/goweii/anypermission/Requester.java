@@ -7,5 +7,5 @@ package per.goweii.anypermission;
  * @date 2019/3/16
  */
 interface Requester<R> {
-    R start(RequestListener listener);
+    R request(RequestListener listener);
 }

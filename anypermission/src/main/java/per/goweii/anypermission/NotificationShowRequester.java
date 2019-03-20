@@ -29,7 +29,7 @@ public class NotificationShowRequester implements Requester<Void> {
     }
 
     @Override
-    public Void start(final RequestListener listener) {
+    public Void request(final RequestListener listener) {
         mOption.notification().permission()
                 .rationale(new Rationale<Void>() {
                     @Override

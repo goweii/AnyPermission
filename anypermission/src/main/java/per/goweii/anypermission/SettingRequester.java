@@ -29,7 +29,7 @@ public class SettingRequester implements Requester<Void> {
     }
 
     @Override
-    public Void start(final RequestListener listener) {
+    public Void request(final RequestListener listener) {
         mOption.setting()
                 .write()
                 .rationale(new Rationale<Void>() {

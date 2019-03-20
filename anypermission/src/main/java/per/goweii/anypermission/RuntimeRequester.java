@@ -59,7 +59,7 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
     }
 
     @Override
-    public RuntimeRequester start(@NonNull RequestListener listener) {
+    public RuntimeRequester request(@NonNull RequestListener listener) {
         mListener = listener;
         findUnGrantedPermissions();
         if (mUnGrantedPermissions.peek() == null) {

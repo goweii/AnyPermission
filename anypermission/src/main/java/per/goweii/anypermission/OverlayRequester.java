@@ -29,7 +29,7 @@ public class OverlayRequester implements Requester<Void> {
     }
 
     @Override
-    public Void start(final RequestListener listener) {
+    public Void request(final RequestListener listener) {
         mOption.overlay()
                 .rationale(new Rationale<Void>() {
                     @Override
