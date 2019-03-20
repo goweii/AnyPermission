@@ -17,13 +17,13 @@ public class NotificationShowRequester implements Requester<Void> {
 
     private final Option mOption;
 
-    private OnPermissionProcess<Void> mOnWithoutPermission = null;
+    private RequestInterceptor<Void> mOnWithoutPermission = null;
 
     NotificationShowRequester(Option option) {
         this.mOption = option;
     }
 
-    public NotificationShowRequester onWithoutPermission(OnPermissionProcess<Void> onWithoutPermission) {
+    public NotificationShowRequester onWithoutPermission(RequestInterceptor<Void> onWithoutPermission) {
         mOnWithoutPermission = onWithoutPermission;
         return this;
     }
@@ -37,9 +37,9 @@ public class NotificationShowRequester implements Requester<Void> {
                         if (mOnWithoutPermission == null) {
                             e.execute();
                         } else {
-                            mOnWithoutPermission.process(d, new OnPermissionProcess.Processor() {
+                            mOnWithoutPermission.intercept(d, new RequestInterceptor.Executor() {
                                 @Override
-                                public void next() {
+                                public void execute() {
                                     e.execute();
                                 }
 

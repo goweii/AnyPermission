@@ -16,7 +16,7 @@ import java.io.File;
 
 import per.goweii.anylayer.AnyLayer;
 import per.goweii.anypermission.AnyPermission;
-import per.goweii.anypermission.OnPermissionProcess;
+import per.goweii.anypermission.RequestInterceptor;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 
@@ -86,9 +86,9 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                         Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.SEND_SMS)
-                .onBeforeRequest(new OnPermissionProcess<String>() {
+                .onBeforeRequest(new RequestInterceptor<String>() {
                     @Override
-                    public void process(@NonNull final String permission, @NonNull final Processor processor) {
+                    public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
                         AnyLayer.with(TestFragment.this.getContext())
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
@@ -109,21 +109,21 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.next();
+                                        executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.cancel();
+                                        executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
                                 .show();
                     }
                 })
-                .onBeenDenied(new OnPermissionProcess<String>() {
+                .onBeenDenied(new RequestInterceptor<String>() {
                     @Override
-                    public void process(@NonNull final String permission, @NonNull final Processor processor) {
+                    public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
                         AnyLayer.with(TestFragment.this.getContext())
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
@@ -144,21 +144,21 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.next();
+                                        executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.cancel();
+                                        executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
                                 .show();
                     }
                 })
-                .onGoSetting(new OnPermissionProcess<String>() {
+                .onGoSetting(new RequestInterceptor<String>() {
                     @Override
-                    public void process(@NonNull final String permission, @NonNull final Processor processor) {
+                    public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
                         AnyLayer.with(TestFragment.this.getContext())
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
@@ -179,13 +179,13 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.next();
+                                        executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.cancel();
+                                        executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
                                 .show();
@@ -206,9 +206,9 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
     private void requestInstall() {
         AnyPermission.with(this).install(new File(TestFragment.this.getContext().getCacheDir(), "1.apk"))
-                .onWithoutPermission(new OnPermissionProcess<File>() {
+                .onWithoutPermission(new RequestInterceptor<File>() {
                     @Override
-                    public void process(@NonNull final File data, @NonNull final Processor processor) {
+                    public void intercept(@NonNull final File data, @NonNull final Executor executor) {
                         AnyLayer.with(TestFragment.this.getContext())
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
@@ -229,13 +229,13 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.next();
+                                        executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.cancel();
+                                        executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
                                 .show();
@@ -256,9 +256,9 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
     private void requestOverlay() {
         AnyPermission.with(this).overlay()
-                .onWithoutPermission(new OnPermissionProcess<Void>() {
+                .onWithoutPermission(new RequestInterceptor<Void>() {
                     @Override
-                    public void process(@NonNull final Void data, @NonNull final Processor processor) {
+                    public void intercept(@NonNull final Void data, @NonNull final Executor executor) {
                         AnyLayer.with(TestFragment.this.getContext())
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
@@ -279,13 +279,13 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.next();
+                                        executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.cancel();
+                                        executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
                                 .show();
@@ -306,9 +306,9 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
     private void requestSetting() {
         AnyPermission.with(this).setting()
-                .onWithoutPermission(new OnPermissionProcess<Void>() {
+                .onWithoutPermission(new RequestInterceptor<Void>() {
                     @Override
-                    public void process(@NonNull final Void data, @NonNull final Processor processor) {
+                    public void intercept(@NonNull final Void data, @NonNull final Executor executor) {
                         AnyLayer.with(TestFragment.this.getContext())
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
@@ -329,13 +329,13 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.next();
+                                        executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.cancel();
+                                        executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
                                 .show();
@@ -356,9 +356,9 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
     private void requestNotificationShow() {
         AnyPermission.with(this).notificationShow()
-                .onWithoutPermission(new OnPermissionProcess<Void>() {
+                .onWithoutPermission(new RequestInterceptor<Void>() {
                     @Override
-                    public void process(@NonNull final Void data, @NonNull final Processor processor) {
+                    public void intercept(@NonNull final Void data, @NonNull final Executor executor) {
                         AnyLayer.with(TestFragment.this.getContext())
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
@@ -379,13 +379,13 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.next();
+                                        executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.cancel();
+                                        executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
                                 .show();
@@ -406,9 +406,9 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
     private void requestNotificationAccess() {
         AnyPermission.with(this).notificationAccess()
-                .onWithoutPermission(new OnPermissionProcess<Void>() {
+                .onWithoutPermission(new RequestInterceptor<Void>() {
                     @Override
-                    public void process(@NonNull final Void data, @NonNull final Processor processor) {
+                    public void intercept(@NonNull final Void data, @NonNull final Executor executor) {
                         AnyLayer.with(TestFragment.this.getContext())
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
@@ -429,13 +429,13 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.next();
+                                        executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
                                 .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
                                     @Override
                                     public void onClick(AnyLayer anyLayer, View v) {
-                                        processor.cancel();
+                                        executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
                                 .show();

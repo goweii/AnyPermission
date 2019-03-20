@@ -17,13 +17,13 @@ public class SettingRequester implements Requester<Void> {
 
     private final Option mOption;
 
-    private OnPermissionProcess<Void> mOnWithoutPermission = null;
+    private RequestInterceptor<Void> mOnWithoutPermission = null;
 
     SettingRequester(Option option) {
         this.mOption = option;
     }
 
-    public SettingRequester onWithoutPermission(OnPermissionProcess<Void> onWithoutPermission) {
+    public SettingRequester onWithoutPermission(RequestInterceptor<Void> onWithoutPermission) {
         mOnWithoutPermission = onWithoutPermission;
         return this;
     }
@@ -38,9 +38,9 @@ public class SettingRequester implements Requester<Void> {
                         if (mOnWithoutPermission == null) {
                             e.execute();
                         } else {
-                            mOnWithoutPermission.process(d, new OnPermissionProcess.Processor() {
+                            mOnWithoutPermission.intercept(d, new RequestInterceptor.Executor() {
                                 @Override
-                                public void next() {
+                                public void execute() {
                                     e.execute();
                                 }
 

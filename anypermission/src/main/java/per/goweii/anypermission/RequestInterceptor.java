@@ -8,12 +8,11 @@ import android.support.annotation.NonNull;
  * @author Cuizhen
  * @date 2019/3/16
  */
-public interface OnPermissionProcess<T> {
-    void process(@NonNull final T data, @NonNull final Processor processor);
+public interface RequestInterceptor<T> {
+    void intercept(@NonNull final T data, @NonNull final Executor executor);
 
-    interface Processor {
-        void next();
+    interface Executor {
+        void execute();
         void cancel();
     }
-
 }

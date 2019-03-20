@@ -28,9 +28,9 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
 
     private RequestListener mListener = null;
 
-    private OnPermissionProcess<String> mOnBeforeRequest = null;
-    private OnPermissionProcess<String> mOnBeenDenied = null;
-    private OnPermissionProcess<String> mOnGoSetting = null;
+    private RequestInterceptor<String> mOnBeforeRequest = null;
+    private RequestInterceptor<String> mOnBeenDenied = null;
+    private RequestInterceptor<String> mOnGoSetting = null;
 
     RuntimeRequester(Option option, Context context, int requestCodeWhenGoSetting) {
         this.mOption = option;
@@ -43,17 +43,17 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
         return this;
     }
 
-    public RuntimeRequester onBeforeRequest(OnPermissionProcess<String> onBeforeRequest) {
+    public RuntimeRequester onBeforeRequest(RequestInterceptor<String> onBeforeRequest) {
         mOnBeforeRequest = onBeforeRequest;
         return this;
     }
 
-    public RuntimeRequester onBeenDenied(OnPermissionProcess<String> onBeenDenied) {
+    public RuntimeRequester onBeenDenied(RequestInterceptor<String> onBeenDenied) {
         mOnBeenDenied = onBeenDenied;
         return this;
     }
 
-    public RuntimeRequester onGoSetting(OnPermissionProcess<String> onGoSetting) {
+    public RuntimeRequester onGoSetting(RequestInterceptor<String> onGoSetting) {
         mOnGoSetting = onGoSetting;
         return this;
     }
@@ -129,9 +129,9 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
             request();
             return;
         }
-        mOnBeforeRequest.process(mUnGrantedPermissions.peek(), new OnPermissionProcess.Processor() {
+        mOnBeforeRequest.intercept(mUnGrantedPermissions.peek(), new RequestInterceptor.Executor() {
             @Override
-            public void next() {
+            public void execute() {
                 request();
             }
 
@@ -147,9 +147,9 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
             request();
             return;
         }
-        mOnBeenDenied.process(mUnGrantedPermissions.peek(), new OnPermissionProcess.Processor() {
+        mOnBeenDenied.intercept(mUnGrantedPermissions.peek(), new RequestInterceptor.Executor() {
             @Override
-            public void next() {
+            public void execute() {
                 request();
             }
 
@@ -165,9 +165,9 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
             setting();
             return;
         }
-        mOnGoSetting.process(mUnGrantedPermissions.peek(), new OnPermissionProcess.Processor() {
+        mOnGoSetting.intercept(mUnGrantedPermissions.peek(), new RequestInterceptor.Executor() {
             @Override
-            public void next() {
+            public void execute() {
                 setting();
             }
 

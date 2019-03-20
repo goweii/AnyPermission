@@ -10,6 +10,7 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * 描述：

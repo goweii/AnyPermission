@@ -20,14 +20,14 @@ public class InstallRequester implements Requester<Void> {
     private final Option mOption;
     private final File mApkFile;
 
-    private OnPermissionProcess<File> mOnWithoutPermission = null;
+    private RequestInterceptor<File> mOnWithoutPermission = null;
 
     InstallRequester(Option option, File apkFile) {
         this.mOption = option;
         this.mApkFile = apkFile;
     }
 
-    public InstallRequester onWithoutPermission(OnPermissionProcess<File> onWithoutPermission) {
+    public InstallRequester onWithoutPermission(RequestInterceptor<File> onWithoutPermission) {
         mOnWithoutPermission = onWithoutPermission;
         return this;
     }
@@ -42,9 +42,9 @@ public class InstallRequester implements Requester<Void> {
                         if (mOnWithoutPermission == null) {
                             e.execute();
                         } else {
-                            mOnWithoutPermission.process(f, new OnPermissionProcess.Processor() {
+                            mOnWithoutPermission.intercept(f, new RequestInterceptor.Executor() {
                                 @Override
-                                public void next() {
+                                public void execute() {
                                     e.execute();
                                 }
 

@@ -62,24 +62,24 @@ private void requestRuntime() {
     mRuntimeRequester = AnyPermission.with(this).runtime(1)
             .permissions(Manifest.permission.CAMERA,
                     Manifest.permission.CALL_PHONE)
-            .onBeforeRequest(new OnPermissionProcess<String>() {
+            .onBeforeRequest(new RequestInterceptor<String>() {
                 @Override
-                public void process(@NonNull final String permission, @NonNull final Processor processor) {
+                public void interceptor(@NonNull final String permission, @NonNull final Executor executor) {
                     // TODO 在每个权限申请之前调用，多次回调。可弹窗向用户说明下面将进行某个权限的申请。
                     // processor有两个方法，必须调用其一，否则申请流程终止。
                 }
             })
-            .onBeenDenied(new OnPermissionProcess<String>() {
+            .onBeenDenied(new RequestInterceptor<String>() {
                 @Override
-                public void process(@NonNull final String permission, @NonNull final Processor processor) {
+                public void interceptor(@NonNull final String permission, @NonNull final Executor executor) {
                     // TODO 在每个权限被拒后调用，多次回调。可弹窗向用户说明为什么需要该权限，否则用户可能在下次申请勾选不再提示。
                     // processor有两个方法，必须调用其一，否则申请流程终止。
                 }
             })
-            .onGoSetting(new OnPermissionProcess<String>() {
+            .onGoSetting(new RequestInterceptor<String>() {
                 @Override
-                public void process(@NonNull final String permission, @NonNull final Processor processor) {
-                    // TODO 在每个权限永久被拒后调用（即用户勾选不再提示），多次回调。可弹窗引导用户前往设置打开权限，调用processor.next()会自动跳转设置。
+                public void interceptor(@NonNull final String permission, @NonNull final Executor executor) {
+                    // TODO 在每个权限永久被拒后调用（即用户勾选不再提示），多次回调。可弹窗引导用户前往设置打开权限，调用executor.execute()会自动跳转设置。
                     // processor有两个方法，必须调用其一，否则申请流程将终止。
                 }
             })
@@ -109,9 +109,9 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
 
 ```java
 AnyPermission.with(this).install(apkFile)
-        .onWithoutPermission(new OnPermissionProcess<File>() {
+        .onWithoutPermission(new RequestInterceptor<File>() {
             @Override
-            public void process(@NonNull final File data, @NonNull final Processor processor) {
+            public void interceptor(@NonNull final File data, @NonNull final Executor executor) {
                 // TODO 在安装应用之前如果没有授予未知应用安装权限，则会回调该方法，可在此项用户弹窗提示。
                 // processor有两个方法，必须调用其一，否则申请流程将终止。
             }
@@ -133,9 +133,9 @@ AnyPermission.with(this).install(apkFile)
 
 ```java
 AnyPermission.with(this).overlay()
-        .onWithoutPermission(new OnPermissionProcess<Void>() {
+        .onWithoutPermission(new RequestInterceptor<Void>() {
             @Override
-            public void process(@NonNull final Void data, @NonNull final Processor processor) {
+            public void interceptor(@NonNull final Void data, @NonNull final Executor executor) {
                 // TODO 在申请悬浮窗权限之前调用，可在此项用户弹窗提示。
                 // processor有两个方法，必须调用其一，否则申请流程将终止。
             }
@@ -157,9 +157,9 @@ AnyPermission.with(this).overlay()
 
 ```java
 AnyPermission.with(this).notificationShow()
-        .onWithoutPermission(new OnPermissionProcess<Void>() {
+        .onWithoutPermission(new RequestInterceptor<Void>() {
             @Override
-            public void process(@NonNull final Void data, @NonNull final Processor processor) {
+            public void interceptor(@NonNull final Void data, @NonNull final Executor executor) {
                 // TODO 在申请显示通知权限之前调用，可在此项用户弹窗提示。
                 // processor有两个方法，必须调用其一，否则申请流程将终止。
             }
@@ -181,9 +181,9 @@ AnyPermission.with(this).notificationShow()
 
 ```java
 AnyPermission.with(this).notificationAccess()
-        .onWithoutPermission(new OnPermissionProcess<Void>() {
+        .onWithoutPermission(new RequestInterceptor<Void>() {
             @Override
-            public void process(@NonNull final Void data, @NonNull final Processor processor) {
+            public void interceptor(@NonNull final Void data, @NonNull final Executor executor) {
                 // TODO 在申请访问通知权限之前调用，可在此项用户弹窗提示。
                 // processor有两个方法，必须调用其一，否则申请流程将终止。
             }
@@ -205,15 +205,15 @@ AnyPermission.with(this).notificationAccess()
 
 # API
 
-## OnPermissionProcess<T>
+## RequestInterceptor<T>
 
 权限申请流程中回调，用于弹窗提醒用户。
 
 ```java
-void process(@NonNull final T data, @NonNull final Processor processor)
+void interceptor(@NonNull final T data, @NonNull final Executor executor)
 ```
 
-## Processor
+## Executor
 
 控制流程的执行或取消。
 
@@ -221,7 +221,7 @@ void process(@NonNull final T data, @NonNull final Processor processor)
 /**
  * 继续流程
  **/
-void next()
+void execute()
     
 /**
  * 取消流程，即回调到申请失败
@@ -291,17 +291,17 @@ public RuntimeRequester permissions(String... permissions)
 /**
  * 每个权限申请之前的回调
  **/
-public RuntimeRequester onBeforeRequest(OnPermissionProcess<String> onBeforeRequest)
+public RuntimeRequester onBeforeRequest(RequestInterceptor<String> onBeforeRequest)
 
 /**
  * 每个权限被拒后的回调
  **/
-public RuntimeRequester onBeenDenied(OnPermissionProcess<String> onBeenDenied)
+public RuntimeRequester onBeenDenied(RequestInterceptor<String> onBeenDenied)
 
 /**
  * 每个权限被永久拒绝后的回调
  **/
-public RuntimeRequester onGoSetting(OnPermissionProcess<String> onGoSetting)
+public RuntimeRequester onGoSetting(RequestInterceptor<String> onGoSetting)
 
 /**
  * 开始申请
@@ -322,7 +322,7 @@ public void onActivityResult(int requestCode)
 /**
  * 未授予权限时，在跳转设置页面之前调用
  **/
-public InstallRequester onWithoutPermission(OnPermissionProcess<File> onWithoutPermission)
+public InstallRequester onWithoutPermission(RequestInterceptor<File> onWithoutPermission)
     
 /**
  * 开始申请
@@ -338,7 +338,7 @@ public Void start(final RequestListener listener)
 /**
  * 未授予权限时，在跳转设置页面之前调用
  **/
-public OverlayRequester onWithoutPermission(OnPermissionProcess<Void> onWithoutPermission)
+public OverlayRequester onWithoutPermission(RequestInterceptor<Void> onWithoutPermission)
     
 /**
  * 开始申请
@@ -354,7 +354,7 @@ public Void start(final RequestListener listener)
 /**
  * 未授予权限时，在跳转设置页面之前调用
  **/
-public NotificationShowRequester onWithoutPermission(OnPermissionProcess<Void> onWithoutPermission)
+public NotificationShowRequester onWithoutPermission(RequestInterceptor<Void> onWithoutPermission)
     
 /**
  * 开始申请
@@ -370,7 +370,7 @@ public Void start(final RequestListener listener)
 /**
  * 未授予权限时，在跳转设置页面之前调用
  **/
-public NotificationAccessRequester onWithoutPermission(OnPermissionProcess<Void> onWithoutPermission)
+public NotificationAccessRequester onWithoutPermission(RequestInterceptor<Void> onWithoutPermission)
     
 /**
  * 开始申请
