@@ -62,37 +62,17 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
     public RuntimeRequester request(@NonNull RequestListener listener) {
         mListener = listener;
         findUnGrantedPermissions();
-        if (mUnGrantedPermissions.peek() == null) {
-            onSuccess();
-            return this;
-        }
-        onBeforeRequest();
+        next();
         return this;
     }
 
     public void onActivityResult(int requestCode) {
         if (requestCode == mRequestCode) {
-            if (mUnGrantedPermissions.peek() == null) {
-                findUnGrantedPermissions();
-            }
-            if (mUnGrantedPermissions.peek() == null) {
-                onSuccess();
-                return;
-            }
             if (AndPermission.hasPermissions(mContext, mUnGrantedPermissions.peek())) {
                 mUnGrantedPermissions.poll();
-                findUnGrantedPermissions();
-                if (mUnGrantedPermissions.peek() == null) {
-                    onSuccess();
-                    return;
-                }
-                onBeforeRequest();
+                next();
             } else {
-                if (AndPermission.hasAlwaysDeniedPermission(mContext, mUnGrantedPermissions.peek())) {
-                    onGoSetting();
-                } else {
-                    onBeenDenied();
-                }
+                again();
             }
         }
     }
@@ -102,12 +82,12 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
             mUnGrantedPermissions = new LinkedList<>();
         }
         for (String permission : mAllNeededPermissions) {
-            if (!AndPermission.hasPermissions(mContext, permission)) {
+            if (AndPermission.hasPermissions(mContext, permission)) {
+                mUnGrantedPermissions.remove(permission);
+            } else {
                 if (!mUnGrantedPermissions.contains(permission)) {
                     mUnGrantedPermissions.offer(permission);
                 }
-            } else {
-                mUnGrantedPermissions.remove(permission);
             }
         }
     }
@@ -195,13 +175,22 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
                 .onDenied(new Action<List<String>>() {
                     @Override
                     public void onAction(final List<String> data) {
-                        next();
+                        again();
                     }
                 })
                 .start();
     }
 
     private void next() {
+        // findUnGrantedPermissions();
+        if (mUnGrantedPermissions.peek() == null) {
+            onSuccess();
+            return;
+        }
+        onBeforeRequest();
+    }
+
+    private void again() {
         if (mUnGrantedPermissions.peek() == null) {
             onSuccess();
             return;

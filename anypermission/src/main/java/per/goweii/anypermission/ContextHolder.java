@@ -7,7 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.checker.StandardChecker;
 import com.yanzhenjie.permission.option.Option;
+
+import java.lang.reflect.Field;
 
 /**
  * 描述：
@@ -50,7 +53,8 @@ public class ContextHolder {
         mFragment = fragment;
     }
 
-    public Option getOption(){
+    public Option getOption() {
+        hookAndPermission();
         if (mContext != null) {
             return AndPermission.with(mContext);
         } else if (mActivity != null) {
@@ -63,7 +67,7 @@ public class ContextHolder {
         return null;
     }
 
-    public Context getContext(){
+    public Context getContext() {
         if (mContext != null) {
             return mContext;
         } else if (mActivity != null) {
@@ -78,5 +82,23 @@ public class ContextHolder {
             }
         }
         return null;
+    }
+
+    private void hookAndPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            hookAndPermissionDoubleChecker();
+        }
+    }
+
+    private void hookAndPermissionDoubleChecker() {
+        try {
+            Class<?> andPermission = Class.forName("com.yanzhenjie.permission.checker.DoubleChecker");
+            Field strictChecker = andPermission.getDeclaredField("STRICT_CHECKER");
+            strictChecker.setAccessible(true);
+            Object fieldObj = strictChecker.get(null);
+            strictChecker.set(fieldObj, new StandardChecker());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
