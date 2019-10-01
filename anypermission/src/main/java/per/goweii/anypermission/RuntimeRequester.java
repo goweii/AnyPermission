@@ -182,9 +182,13 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
     }
 
     private void next() {
-        // findUnGrantedPermissions();
         if (mUnGrantedPermissions.peek() == null) {
             onSuccess();
+            return;
+        }
+        if (AndPermission.hasPermissions(mContext, mUnGrantedPermissions.peek())) {
+            mUnGrantedPermissions.poll();
+            next();
             return;
         }
         onBeforeRequest();
@@ -193,6 +197,11 @@ public class RuntimeRequester implements Requester<RuntimeRequester> {
     private void again() {
         if (mUnGrantedPermissions.peek() == null) {
             onSuccess();
+            return;
+        }
+        if (AndPermission.hasPermissions(mContext, mUnGrantedPermissions.peek())) {
+            mUnGrantedPermissions.poll();
+            next();
             return;
         }
         if (AndPermission.hasAlwaysDeniedPermission(mContext, mUnGrantedPermissions.peek())) {

@@ -70,13 +70,15 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void requestRuntime() {
-        mRuntimeRequester = AnyPermission.with(this).runtime(1)
+        mRuntimeRequester = AnyPermission.with(this)
+                .runtime(1)
                 .permissions(Manifest.permission.CAMERA,
                         Manifest.permission.CALL_PHONE,
                         Manifest.permission.READ_CALENDAR,
                         Manifest.permission.READ_CONTACTS,
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.SEND_SMS)
                 .onBeforeRequest(new RequestInterceptor<String>() {
