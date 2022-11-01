@@ -2,17 +2,19 @@ package per.goweii.android.anypermission;
 
 import android.Manifest;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.File;
 
 import per.goweii.anylayer.AnyLayer;
+import per.goweii.anylayer.Layer;
 import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestInterceptor;
 import per.goweii.anypermission.RequestListener;
@@ -84,32 +86,32 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 .onBeforeRequest(new RequestInterceptor<String>() {
                     @Override
                     public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
-                        AnyLayer.with(TestActivity.this)
+                        AnyLayer.dialog(TestActivity.this)
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
                                 .cancelableOnTouchOutside(false)
                                 .cancelableOnClickKeyBack(false)
-                                .bindData(new AnyLayer.IDataBinder() {
+                                .bindData(new Layer.DataBinder() {
                                     @Override
-                                    public void bind(AnyLayer anyLayer) {
-                                        TextView tvTitle = anyLayer.getView(R.id.tv_dialog_permission_title);
-                                        TextView tvDescription = anyLayer.getView(R.id.tv_dialog_permission_description);
-                                        TextView tvNext = anyLayer.getView(R.id.tv_dialog_permission_next);
+                                    public void bindData(@NonNull Layer layer) {
+                                        TextView tvTitle = layer.getView(R.id.tv_dialog_permission_title);
+                                        TextView tvDescription = layer.getView(R.id.tv_dialog_permission_description);
+                                        TextView tvNext = layer.getView(R.id.tv_dialog_permission_next);
 
                                         tvNext.setText("去授权");
                                         tvTitle.setText(AnyPermission.with(TestActivity.this).name(permission));
                                         tvDescription.setText("我们将开始请求\"" + AnyPermission.with(TestActivity.this).name(permission) + "\"权限");
                                     }
                                 })
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
@@ -119,32 +121,32 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 .onBeenDenied(new RequestInterceptor<String>() {
                     @Override
                     public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
-                        AnyLayer.with(TestActivity.this)
+                        AnyLayer.dialog(TestActivity.this)
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
                                 .cancelableOnTouchOutside(false)
                                 .cancelableOnClickKeyBack(false)
-                                .bindData(new AnyLayer.IDataBinder() {
+                                .bindData(new Layer.DataBinder() {
                                     @Override
-                                    public void bind(AnyLayer anyLayer) {
-                                        TextView tvTitle = anyLayer.getView(R.id.tv_dialog_permission_title);
-                                        TextView tvDescription = anyLayer.getView(R.id.tv_dialog_permission_description);
-                                        TextView tvNext = anyLayer.getView(R.id.tv_dialog_permission_next);
+                                    public void bindData(@NonNull Layer layer) {
+                                        TextView tvTitle = layer.getView(R.id.tv_dialog_permission_title);
+                                        TextView tvDescription = layer.getView(R.id.tv_dialog_permission_description);
+                                        TextView tvNext = layer.getView(R.id.tv_dialog_permission_next);
 
                                         tvNext.setText("重新授权");
                                         tvTitle.setText(AnyPermission.with(TestActivity.this).name(permission));
                                         tvDescription.setText("啊哦，\"" + AnyPermission.with(TestActivity.this).name(permission) + "\"权限被拒了");
                                     }
                                 })
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
@@ -154,32 +156,32 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 .onGoSetting(new RequestInterceptor<String>() {
                     @Override
                     public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
-                        AnyLayer.with(TestActivity.this)
+                        AnyLayer.dialog(TestActivity.this)
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
                                 .cancelableOnTouchOutside(false)
                                 .cancelableOnClickKeyBack(false)
-                                .bindData(new AnyLayer.IDataBinder() {
+                                .bindData(new Layer.DataBinder() {
                                     @Override
-                                    public void bind(AnyLayer anyLayer) {
-                                        TextView tvTitle = anyLayer.getView(R.id.tv_dialog_permission_title);
-                                        TextView tvDescription = anyLayer.getView(R.id.tv_dialog_permission_description);
-                                        TextView tvNext = anyLayer.getView(R.id.tv_dialog_permission_next);
+                                    public void bindData(@NonNull Layer layer) {
+                                        TextView tvTitle = layer.getView(R.id.tv_dialog_permission_title);
+                                        TextView tvDescription = layer.getView(R.id.tv_dialog_permission_description);
+                                        TextView tvNext = layer.getView(R.id.tv_dialog_permission_next);
 
                                         tvNext.setText("去设置");
                                         tvTitle.setText(AnyPermission.with(TestActivity.this).name(permission));
                                         tvDescription.setText("不能禁止\"" + AnyPermission.with(TestActivity.this).name(permission) + "\"权限");
                                     }
                                 })
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
@@ -204,32 +206,32 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 .onWithoutPermission(new RequestInterceptor<File>() {
                     @Override
                     public void intercept(@NonNull final File data, @NonNull final Executor executor) {
-                        AnyLayer.with(TestActivity.this)
+                        AnyLayer.dialog(TestActivity.this)
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
                                 .cancelableOnTouchOutside(false)
                                 .cancelableOnClickKeyBack(false)
-                                .bindData(new AnyLayer.IDataBinder() {
+                                .bindData(new Layer.DataBinder() {
                                     @Override
-                                    public void bind(AnyLayer anyLayer) {
-                                        TextView tvTitle = anyLayer.getView(R.id.tv_dialog_permission_title);
-                                        TextView tvDescription = anyLayer.getView(R.id.tv_dialog_permission_description);
-                                        TextView tvNext = anyLayer.getView(R.id.tv_dialog_permission_next);
+                                    public void bindData(@NonNull Layer layer) {
+                                        TextView tvTitle = layer.getView(R.id.tv_dialog_permission_title);
+                                        TextView tvDescription = layer.getView(R.id.tv_dialog_permission_description);
+                                        TextView tvNext = layer.getView(R.id.tv_dialog_permission_next);
 
                                         tvNext.setText("去打开");
                                         tvTitle.setText("安装应用");
                                         tvDescription.setText("我们将开始请求安装应用权限");
                                     }
                                 })
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
@@ -254,32 +256,32 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 .onWithoutPermission(new RequestInterceptor<Void>() {
                     @Override
                     public void intercept(@NonNull final Void data, @NonNull final Executor executor) {
-                        AnyLayer.with(TestActivity.this)
+                        AnyLayer.dialog(TestActivity.this)
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
                                 .cancelableOnTouchOutside(false)
                                 .cancelableOnClickKeyBack(false)
-                                .bindData(new AnyLayer.IDataBinder() {
+                                .bindData(new Layer.DataBinder() {
                                     @Override
-                                    public void bind(AnyLayer anyLayer) {
-                                        TextView tvTitle = anyLayer.getView(R.id.tv_dialog_permission_title);
-                                        TextView tvDescription = anyLayer.getView(R.id.tv_dialog_permission_description);
-                                        TextView tvNext = anyLayer.getView(R.id.tv_dialog_permission_next);
+                                    public void bindData(@NonNull Layer layer) {
+                                        TextView tvTitle = layer.getView(R.id.tv_dialog_permission_title);
+                                        TextView tvDescription = layer.getView(R.id.tv_dialog_permission_description);
+                                        TextView tvNext = layer.getView(R.id.tv_dialog_permission_next);
 
                                         tvNext.setText("去打开");
                                         tvTitle.setText("悬浮窗");
                                         tvDescription.setText("我们将开始请求悬浮窗权限");
                                     }
                                 })
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
@@ -304,32 +306,32 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 .onWithoutPermission(new RequestInterceptor<Void>() {
                     @Override
                     public void intercept(@NonNull final Void data, @NonNull final Executor executor) {
-                        AnyLayer.with(TestActivity.this)
+                        AnyLayer.dialog(TestActivity.this)
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
                                 .cancelableOnTouchOutside(false)
                                 .cancelableOnClickKeyBack(false)
-                                .bindData(new AnyLayer.IDataBinder() {
+                                .bindData(new Layer.DataBinder() {
                                     @Override
-                                    public void bind(AnyLayer anyLayer) {
-                                        TextView tvTitle = anyLayer.getView(R.id.tv_dialog_permission_title);
-                                        TextView tvDescription = anyLayer.getView(R.id.tv_dialog_permission_description);
-                                        TextView tvNext = anyLayer.getView(R.id.tv_dialog_permission_next);
+                                    public void bindData(@NonNull Layer layer) {
+                                        TextView tvTitle = layer.getView(R.id.tv_dialog_permission_title);
+                                        TextView tvDescription = layer.getView(R.id.tv_dialog_permission_description);
+                                        TextView tvNext = layer.getView(R.id.tv_dialog_permission_next);
 
                                         tvNext.setText("去打开");
                                         tvTitle.setText("修改设置");
                                         tvDescription.setText("我们将开始请求修改设置权限");
                                     }
                                 })
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
@@ -354,32 +356,32 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 .onWithoutPermission(new RequestInterceptor<Void>() {
                     @Override
                     public void intercept(@NonNull final Void data, @NonNull final Executor executor) {
-                        AnyLayer.with(TestActivity.this)
+                        AnyLayer.dialog(TestActivity.this)
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
                                 .cancelableOnTouchOutside(false)
                                 .cancelableOnClickKeyBack(false)
-                                .bindData(new AnyLayer.IDataBinder() {
+                                .bindData(new Layer.DataBinder() {
                                     @Override
-                                    public void bind(AnyLayer anyLayer) {
-                                        TextView tvTitle = anyLayer.getView(R.id.tv_dialog_permission_title);
-                                        TextView tvDescription = anyLayer.getView(R.id.tv_dialog_permission_description);
-                                        TextView tvNext = anyLayer.getView(R.id.tv_dialog_permission_next);
+                                    public void bindData(@NonNull Layer layer) {
+                                        TextView tvTitle = layer.getView(R.id.tv_dialog_permission_title);
+                                        TextView tvDescription = layer.getView(R.id.tv_dialog_permission_description);
+                                        TextView tvNext = layer.getView(R.id.tv_dialog_permission_next);
 
                                         tvNext.setText("去打开");
                                         tvTitle.setText("显示通知");
                                         tvDescription.setText("我们将开始请求显示通知权限");
                                     }
                                 })
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)
@@ -404,32 +406,32 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 .onWithoutPermission(new RequestInterceptor<Void>() {
                     @Override
                     public void intercept(@NonNull final Void data, @NonNull final Executor executor) {
-                        AnyLayer.with(TestActivity.this)
+                        AnyLayer.dialog(TestActivity.this)
                                 .contentView(R.layout.dialog_runtime_before_request)
                                 .backgroundColorRes(R.color.dialog_bg)
                                 .cancelableOnTouchOutside(false)
                                 .cancelableOnClickKeyBack(false)
-                                .bindData(new AnyLayer.IDataBinder() {
+                                .bindData(new Layer.DataBinder() {
                                     @Override
-                                    public void bind(AnyLayer anyLayer) {
-                                        TextView tvTitle = anyLayer.getView(R.id.tv_dialog_permission_title);
-                                        TextView tvDescription = anyLayer.getView(R.id.tv_dialog_permission_description);
-                                        TextView tvNext = anyLayer.getView(R.id.tv_dialog_permission_next);
+                                    public void bindData(@NonNull Layer layer) {
+                                        TextView tvTitle = layer.getView(R.id.tv_dialog_permission_title);
+                                        TextView tvDescription = layer.getView(R.id.tv_dialog_permission_description);
+                                        TextView tvNext = layer.getView(R.id.tv_dialog_permission_next);
 
                                         tvNext.setText("去打开");
                                         tvTitle.setText("访问通知");
                                         tvDescription.setText("我们将开始请求访问通知权限");
                                     }
                                 })
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.execute();
                                     }
                                 }, R.id.tv_dialog_permission_next)
-                                .onClickToDismiss(new AnyLayer.OnLayerClickListener() {
+                                .onClickToDismiss(new Layer.OnClickListener() {
                                     @Override
-                                    public void onClick(AnyLayer anyLayer, View v) {
+                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
                                         executor.cancel();
                                     }
                                 }, R.id.tv_dialog_permission_close)

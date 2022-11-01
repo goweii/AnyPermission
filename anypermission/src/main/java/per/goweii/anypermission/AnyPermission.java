@@ -3,14 +3,14 @@ package per.goweii.anypermission;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * 描述：
@@ -38,19 +38,19 @@ public class AnyPermission {
         return new AnyPermission(fragment);
     }
 
-    private AnyPermission(final Context context){
+    private AnyPermission(final Context context) {
         mContextHolder = new ContextHolder(context);
     }
 
-    private AnyPermission(final Activity activity){
+    private AnyPermission(final Activity activity) {
         mContextHolder = new ContextHolder(activity);
     }
 
-    private AnyPermission(final Fragment fragment){
+    private AnyPermission(final Fragment fragment) {
         mContextHolder = new ContextHolder(fragment);
     }
 
-    private AnyPermission(final android.app.Fragment fragment){
+    private AnyPermission(final android.app.Fragment fragment) {
         mContextHolder = new ContextHolder(fragment);
     }
 

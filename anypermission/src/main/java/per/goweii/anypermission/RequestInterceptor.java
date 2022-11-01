@@ -1,6 +1,6 @@
 package per.goweii.anypermission;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * 描述：
